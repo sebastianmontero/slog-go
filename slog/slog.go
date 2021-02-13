@@ -11,7 +11,6 @@ import (
 type Config struct {
 	Pretty bool
 	Level  zerolog.Level
-	source string
 }
 
 //Log Log object
@@ -20,7 +19,7 @@ type Log struct {
 }
 
 //New Creates a new log
-func New(config *Config) *Log {
+func New(config *Config, source string) *Log {
 	if config == nil {
 		config = &Config{
 			Pretty: true,
@@ -28,8 +27,8 @@ func New(config *Config) *Log {
 		}
 	}
 	logger := log.Level(config.Level)
-	if config.source != "" {
-		logger = logger.With().Str("source", "dfclient").Logger()
+	if source != "" {
+		logger = logger.With().Str("source", source).Logger()
 	}
 	if config.Pretty {
 		logger = logger.Output(zerolog.ConsoleWriter{Out: os.Stderr})
