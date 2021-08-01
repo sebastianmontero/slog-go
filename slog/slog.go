@@ -2,6 +2,7 @@ package slog
 
 import (
 	"os"
+	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -20,6 +21,7 @@ type Log struct {
 
 //New Creates a new log
 func New(config *Config, source string) *Log {
+	zerolog.TimeFieldFormat = time.RFC822
 	if config == nil {
 		config = &Config{
 			Pretty: true,
