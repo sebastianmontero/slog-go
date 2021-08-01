@@ -21,7 +21,6 @@ type Log struct {
 
 //New Creates a new log
 func New(config *Config, source string) *Log {
-	zerolog.TimeFieldFormat = time.RFC822
 	if config == nil {
 		config = &Config{
 			Pretty: true,
@@ -33,7 +32,7 @@ func New(config *Config, source string) *Log {
 		logger = logger.With().Str("source", source).Logger()
 	}
 	if config.Pretty {
-		logger = logger.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+		logger = logger.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC822})
 	}
 	return &Log{logger}
 }
